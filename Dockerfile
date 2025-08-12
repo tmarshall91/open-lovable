@@ -10,12 +10,12 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# ---- ADD THIS LINE ----
 ARG OPENAI_API_KEY
-# This line tells the builder to expect a build-time argument named OPENAI_API_KEY.
-# ---- ADD THIS LINE ----
+ARG E2B_API_KEY
+ARG FIRECRAWL_API_KEY
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
-# This line sets that argument as an environment variable that the build script can use.
+ENV E2B_API_KEY=$E2B_API_KEY
+ENV FIRECRAWL_API_KEY=$FIRECRAWL_API_KEY
 RUN npm install -g pnpm && pnpm build
 
 # Run the app
