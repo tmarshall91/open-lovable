@@ -30,6 +30,8 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:latest
           build-args: |
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            E2B_API_KEY=${{ secrets.E2B_API_KEY }}
+            FIRECRAWL_API_KEY=${{ secrets.FIRECRAWL_API_KEY }}
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -47,5 +49,7 @@ jobs:
               --network my-shared-network \
               -p 8003:3000 \
               -e "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" \
+              -e "E2B_API_KEY=${{ secrets.E2B_API_KEY }}" \
+              -e "FIRECRAWL_API_KEY=${{ secrets.FIRECRAWL_API_KEY }}" \
               --restart always \
               ghcr.io/${{ github.repository }}:latest
